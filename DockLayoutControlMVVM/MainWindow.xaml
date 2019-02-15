@@ -1,0 +1,54 @@
+﻿<dx:ThemedWindow x:Class="DockLayoutControlMVVM.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+                 xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+                 xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+                 xmlns:local="clr-namespace:DockLayoutControlMVVM"
+                 xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+                 WindowStartupLocation="CenterScreen" SnapsToDevicePixels="True"
+                 DataContext="{dxmvvm:ViewModelSource local:MainVM}"
+                 Loaded="{DXEvent OnLoaded()}"
+                 Title="MainWindow" Height="720" Width="1280">
+
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+            <dxe:ListBoxEdit ItemsSource="{Binding LayoutItems}" Margin="10 0" Padding="0">
+                <dxe:ListBoxEdit.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </dxe:ListBoxEdit.ItemsPanel>
+                <dxe:ListBoxEdit.ItemTemplate>
+                    <DataTemplate>
+                        <ToggleButton Content="{Binding Content}"
+                                      Click="{DXEvent ChangeVisibility()}"
+                                      IsChecked="{DXBinding 'Visibility == Visible', Mode=OneWay}"
+                                      Padding="5 2" />
+                    </DataTemplate>
+                </dxe:ListBoxEdit.ItemTemplate>
+            </dxe:ListBoxEdit>
+
+            <dxe:ComboBoxEdit ItemsSource="{Binding LayoutItems}"
+                              IsTextEditable="False"
+                              Width="100" Height="20" VerticalAlignment="Center">
+                <dxe:ComboBoxEdit.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding DataContext.Text}" Padding="5 2" />
+                    </DataTemplate>
+                </dxe:ComboBoxEdit.ItemTemplate>
+                <dxe:ComboBoxEdit.EditNonEditableTemplate>
+                    <ControlTemplate>
+                        <TextBlock Text="{Binding EditValue.DataContext.Text}" Padding="5 2" VerticalAlignment="Center" />
+                    </ControlTemplate>
+                </dxe:ComboBoxEdit.EditNonEditableTemplate>
+            </dxe:ComboBoxEdit>
+        </StackPanel>
+
+        <dxlc:DockLayoutControl AllowItemSizing="True" Margin="0" Padding="0" ItemSpace="5">
+            <dxmvvm:Interaction.Behaviors>
+                <local:DockItemLayoutBehavior ItemsSource="{Binding LayoutItems}" />
+            </dxmvvm:Interaction.Behaviors>
+        </dxlc:DockLayoutControl>
+    </DockPanel>
+</dx:ThemedWindow>
