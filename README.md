@@ -40,3 +40,6 @@ LayoutItemVM Create(string header, string content, double size = 0d, Dock dock =
 - **Header** is a region header
 - **Content** is a region UserControl name
 - **Size** is a region width for horizontal docking and region height for vertical docking
+
+**The result composed View:**
+![Composed View](https://github.com/msin/DockLayoutControlMVVM/blob/master/ComposedView.png)
